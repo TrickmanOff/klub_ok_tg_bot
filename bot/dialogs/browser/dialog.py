@@ -3,7 +3,6 @@ from typing import List
 from aiogram_dialog import Dialog, Window
 from aiogram_dialog.widgets.kbd import SwitchTo
 from aiogram_dialog.widgets.text import Const
-from aiogram.fsm.state import StatesGroup, State
 from aiogram.enums import ParseMode
 
 from bot.dialogs.browser.article_importer import articles

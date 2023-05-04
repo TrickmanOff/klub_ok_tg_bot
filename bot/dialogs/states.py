@@ -20,3 +20,6 @@ class FilesSG(StatesGroup):
     
     all_files = State()
     hidden = State()
+    scheme_file = State()
+    cat_file = State()
+    hidden_file = State()
