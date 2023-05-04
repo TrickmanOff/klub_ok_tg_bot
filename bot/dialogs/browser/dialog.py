@@ -29,8 +29,8 @@ def get_browser_window() -> Window:
     ]
     return Window(
         Const("Открываю! Похоже Вы недавно начинали читать эти статьи."),
-        get_home_button(),
         *switches_to_articles,
+        get_home_button(),
         state=BrowserSG.browser,
     )
 
