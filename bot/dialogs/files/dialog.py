@@ -9,7 +9,7 @@ from aiogram_dialog.widgets.text import Const
 from aiogram.enums import ParseMode
 
 from bot.dialogs.common import get_home_button
-from bot.dialogs.states import FilesSG, StartSG
+from bot.dialogs.states import FilesSG
 
 
 def get_back_to_files_button() -> SwitchTo:

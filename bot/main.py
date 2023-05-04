@@ -21,6 +21,7 @@ from bot.dialogs.start import StartSG
 from bot.dialogs.start import get_dialog as get_start_dialog
 from bot.dialogs.browser.dialog import get_dialog as get_browser_dialog
 from bot.dialogs.files.dialog import get_dialog as get_files_dialog
+from bot.dialogs.mail.dialog import get_dialog as get_mail_dialog
 
 
 # storage = MemoryStorage()
@@ -32,6 +33,7 @@ def register_dialogs() -> None:
         get_start_dialog,
         get_browser_dialog,
         get_files_dialog,
+        get_mail_dialog,
     ]
     for dialog_creator in dialog_creators:
         dp.include_router(dialog_creator())

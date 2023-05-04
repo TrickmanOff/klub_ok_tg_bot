@@ -2,7 +2,7 @@ from aiogram_dialog import Dialog, Window
 from aiogram_dialog.widgets.kbd import Button, Start
 from aiogram_dialog.widgets.text import Const
 
-from bot.dialogs.states import StartSG, BrowserSG, FilesSG
+from bot.dialogs.states import StartSG, BrowserSG, FilesSG, MailSG
 
 
 def get_start_window() -> Window:
@@ -11,6 +11,7 @@ def get_start_window() -> Window:
         # Button(Const("Браузер"), id="browser", on_click)
         Start(Const("Браузер"), id="browser", state=BrowserSG.browser),
         Start(Const("Файлы"), id="files", state=FilesSG.files),
+        Start(Const("Почта"), id="mail", state=MailSG.mail),
         state=StartSG.start,
     )
 

@@ -2,6 +2,7 @@
 from aiogram.fsm.state import State, StatesGroup
 
 from bot.dialogs.browser.article_importer import articles
+from bot.dialogs.mail.emails import emails
 
 
 class StartSG(StatesGroup):
@@ -23,3 +24,10 @@ class FilesSG(StatesGroup):
     scheme_file = State()
     cat_file = State()
     hidden_file = State()
+
+
+class MailSG(StatesGroup):
+    mail = State()
+
+    for email_id in emails:
+        locals()[email_id] = State()
