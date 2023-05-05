@@ -1,12 +1,11 @@
 services:
   redis-server:
     image: redis/redis-stack-server:latest
-    ports: 
-      - 6379:6379
+    hostname: redis-server
     restart: always
     volumes:
       - ./redis.conf:/redis-stack.conf
-      - ../redis:/redis
+      - ../redis/:/data
     environment:
       ALLOW_EMPTY_PASSWORD: yes
 
