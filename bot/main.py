@@ -23,7 +23,6 @@ from bot.dialogs.mail.dialog import get_dialog as get_mail_dialog
 
 
 REDIS_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379')
-raise ValueError(REDIS_URL)
 
 # storage = MemoryStorage()
 storage = RedisStorage.from_url(f'{REDIS_URL}/0', key_builder=DefaultKeyBuilder(with_destiny=True))
