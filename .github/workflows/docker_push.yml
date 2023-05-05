@@ -1,0 +1,28 @@
+on:
+  release:
+    types: [published]
+    branches: [main]
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  push-to-dockerhub:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref  }} == 'main' # to trigger on tags only from 'main'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: 'Login to the Dockerhub'
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+    
+      - name: 'Build and Push the image to the Dockerhub'
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          file: ./Docker/Dockerfile
+          tags: trickman/klub_ok_tg_bot:latest

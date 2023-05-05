@@ -1,0 +1,22 @@
+services:
+  redis-server:
+    image: redis/redis-stack-server:latest
+    ports: 
+      - 6379:6379
+    volumes:
+      - ./redis.conf:/redis-stack.conf
+      - ../redis:/redis
+
+  bot:
+    image: docker.io/trickman/klub_ok_tg_bot:latest
+    environment:
+      REDIS_URL: redis://redis:6379
+      TELEGRAM_TOKEN: ${TELEGRAM_TOKEN}
+
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    environment:
+      WATCHTOWER_POLL_INTERVAL: 10

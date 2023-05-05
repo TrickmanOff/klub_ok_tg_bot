@@ -1,7 +1,3 @@
-import sys
-# temporary measure to find 'bot' package
-sys.path.append('/Users/trickman/sonya_tg_bot')
-
 from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.storage.redis import RedisStorage, DefaultKeyBuilder
@@ -15,7 +11,9 @@ from aiogram.filters.command import Command
 
 import asyncio
 import os
+import sys
 
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from bot.dialogs.start import StartSG
 from bot.dialogs.start import get_dialog as get_start_dialog
@@ -24,8 +22,11 @@ from bot.dialogs.files.dialog import get_dialog as get_files_dialog
 from bot.dialogs.mail.dialog import get_dialog as get_mail_dialog
 
 
+REDIS_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379')
+raise ValueError(REDIS_URL)
+
 # storage = MemoryStorage()
-storage = RedisStorage.from_url('redis://localhost:6379/0', key_builder=DefaultKeyBuilder(with_destiny=True))
+storage = RedisStorage.from_url(f'{REDIS_URL}/0', key_builder=DefaultKeyBuilder(with_destiny=True))
 dp = Dispatcher(storage=storage)
 
 def register_dialogs() -> None:
