@@ -1,8 +1,6 @@
-from aiogram_dialog.widgets.kbd import Start
+from aiogram_dialog.widgets.kbd import Cancel
 from aiogram_dialog.widgets.text import Const
 
-from bot.dialogs.states import StartSG
 
-
-def get_home_button() -> Start:
-    return Start(Const('На главную'), id='home', state=StartSG.start)
+def get_home_button() -> Cancel:
+    return Cancel(Const('На главную'), id='home')

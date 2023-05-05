@@ -24,6 +24,7 @@ class FilesSG(StatesGroup):
     scheme_file = State()
     cat_file = State()
     hidden_file = State()
+    bug_return = State()
 
 
 class MailSG(StatesGroup):

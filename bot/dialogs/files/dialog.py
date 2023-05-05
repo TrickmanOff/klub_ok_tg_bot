@@ -1,9 +1,10 @@
+import asyncio
 import os
 from typing import List
 
-from aiogram.types import ContentType
-from aiogram_dialog import Dialog, Window
-from aiogram_dialog.widgets.kbd import SwitchTo
+from aiogram.types import CallbackQuery, ContentType
+from aiogram_dialog import BaseDialogManager, Dialog, DialogManager, Window 
+from aiogram_dialog.widgets.kbd import Button, SwitchTo
 from aiogram_dialog.widgets.media import StaticMedia
 from aiogram_dialog.widgets.text import Const
 from aiogram.enums import ParseMode
@@ -56,7 +57,28 @@ def get_all_files_windows() -> List[Window]:
     return [all_files_window, get_scheme_window(), get_cat_window()]
 
 
-def get_hidden_file_window() -> Window:
+def get_bug_return_window() -> Window:
+    msg = 'Простите, кажется, это какой-то баг. Возвращаю вас в файлы!'
+    return Window(
+        Const(msg),
+        state=FilesSG.bug_return,
+    )
+
+
+async def hidden_background(callback: CallbackQuery, manager: BaseDialogManager):
+    await asyncio.sleep(10)
+    await manager.switch_to(FilesSG.bug_return)
+    await asyncio.sleep(5)
+    await manager.done()
+
+
+async def to_hidden_file(c: CallbackQuery, button: Button, manager: DialogManager):
+    await manager.switch_to(FilesSG.files)
+    await manager.start(state=FilesSG.hidden_file)
+    asyncio.create_task(hidden_background(c, manager.bg()))
+
+
+def get_hidden_file_windows() -> List[Window]:
     msg = """\
 Узнай, что же случилось с Котом и какие у этого будут последствия, в демоверсии игры *Лукоморье 2084: На закате корпораций!*
 
@@ -64,22 +86,23 @@ def get_hidden_file_window() -> Window:
 https://t.me/lkmr2084
 https://vk.com/lkmr2084
 """
-    return Window(
+    return [Window(
         Const(msg),
-        SwitchTo(Const('Простите, кажется, это какой-то баг. Возвращаю вас в файлы!'), id='hidden_back_to_files', state=FilesSG.files),
+        # SwitchTo(Const('Простите, кажется, это какой-то баг. Возвращаю вас в файлы!'), id='hidden_back_to_files', state=FilesSG.files),
         state=FilesSG.hidden_file,
         parse_mode=ParseMode.MARKDOWN,
-    )
+    ), get_bug_return_window()]
 
 
 def get_hidden_files_windows() -> List[Window]:
     hidden_window = Window(
         Const('У Вас только один скрытый файл под названием LK84. Открываю?'),
         SwitchTo(Const('Нет'), id='back_to_files', state=FilesSG.files),
-        SwitchTo(Const('Да'), id='open_hidden_file', state=FilesSG.hidden_file),
+        # SwitchTo(Const('Да'), id='open_hidden_file', state=FilesSG.hidden_file),
+        Button(Const('Да'), id='open_hidden_file', on_click=to_hidden_file),
         state=FilesSG.hidden,
     )
-    return [hidden_window, get_hidden_file_window()]
+    return [hidden_window, *get_hidden_file_windows()]
 
 
 def get_files_windows() -> List[Window]:
