@@ -22,10 +22,11 @@ from bot.dialogs.files.dialog import get_dialog as get_files_dialog
 from bot.dialogs.mail.dialog import get_dialog as get_mail_dialog
 
 
-REDIS_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379')
+REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
+REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
 
 # storage = MemoryStorage()
-storage = RedisStorage.from_url(f'{REDIS_URL}/0', key_builder=DefaultKeyBuilder(with_destiny=True))
+storage = RedisStorage.from_url(f'redis://{REDIS_HOST}:{REDIS_PORT}/0', key_builder=DefaultKeyBuilder(with_destiny=True))
 dp = Dispatcher(storage=storage)
 
 def register_dialogs() -> None:
