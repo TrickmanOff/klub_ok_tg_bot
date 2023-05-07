@@ -25,7 +25,7 @@ def get_cat_window() -> Window:
     return Window(
         Const('Это же Ваш сын! Очень мило 😚'),
         StaticMedia(
-            path = get_filepath('cat.jpeg'),
+            path = get_filepath('cat.png'),
             type=ContentType.PHOTO,
         ),
         get_back_to_files_button(),
@@ -38,7 +38,7 @@ def get_scheme_window() -> Window:
     return Window(
         Const('Ничего себе, Кот! Вы и правда гениальный учёный. Даже мой искусственный интеллект ничего не понимает в этих схемах.'),
         StaticMedia(
-            path = get_filepath('scheme.jpeg'),
+            path = get_filepath('blueprint.png'),
             type=ContentType.PHOTO,
         ),
         get_back_to_files_button(),

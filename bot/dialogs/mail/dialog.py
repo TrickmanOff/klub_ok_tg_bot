@@ -1,8 +1,11 @@
+import os
 from typing import List
 
 from aiogram.enums import ParseMode
+from aiogram.types import ContentType
 from aiogram_dialog import Dialog, Window
 from aiogram_dialog.widgets.kbd import SwitchTo
+from aiogram_dialog.widgets.media import StaticMedia
 from aiogram_dialog.widgets.text import Const
 
 from bot.dialogs.common import get_home_button
@@ -14,9 +17,19 @@ def get_back_to_mail_button() -> SwitchTo:
     return SwitchTo(Const('Ко всем письмам'), id='back_to_mail', state=MailSG.mail)
 
 
+def get_filepath(filename: str) -> str:
+    return os.path.join(os.path.dirname(__file__), 'files', filename)
+
+
 def get_letter_window(id: str) -> Window:
+    widgets = [Const(emails[id].content)]
+    if emails[id].filename is not None:
+        widgets.append(StaticMedia(
+            path = get_filepath(emails[id].filename),
+            type=ContentType.PHOTO,
+        ))
     return Window(
-        Const(emails[id].content),
+        *widgets,
         get_back_to_mail_button(),
         get_home_button(),
         state=getattr(MailSG, id),
